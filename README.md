@@ -1,1 +1,1 @@
-# jupyterlab-ext
+# jupyterlab-db
