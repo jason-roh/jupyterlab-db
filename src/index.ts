@@ -3,19 +3,25 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 
+import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
 import { ICommandPalette } from '@jupyterlab/apputils';
+import { addDBButton } from './widgets/dbClone';
 
 /**
  * Initialization data for the jupyterlab_apod extension.
  */
- const extension: JupyterFrontEndPlugin<void> = {
-  id: 'jupyterlab-apod',
+function activate(app: JupyterFrontEnd, palette: ICommandPalette, factory: IFileBrowserFactory) {
+  console.log('JupyterLab extension jupyterlab_db is activated!');
+  const fileBrowser = factory.defaultBrowser;
+  addDBButton(fileBrowser);
+  console.log('ICommandPalette:', palette);
+}
+
+const extension: JupyterFrontEndPlugin<void> = {
+  id: 'jupyterlab_db',
   autoStart: true,
-  requires: [ICommandPalette],
-  activate: (app: JupyterFrontEnd, palette: ICommandPalette) => {
-    console.log('JupyterLab extension jupyterlab_db is activated!');
-    console.log('ICommandPalette:', palette);
-  }
+  requires: [ICommandPalette, IFileBrowserFactory],
+  activate: activate
 };
 
 export default extension;
